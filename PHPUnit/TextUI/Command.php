@@ -65,7 +65,6 @@ class PHPUnit_TextUI_Command
       'generateMakefile'        => FALSE,
       'listGroups'              => FALSE,
       'loader'                  => NULL,
-      'syntaxCheck'             => FALSE,
       'useDefaultConfiguration' => TRUE
     );
 
@@ -144,8 +143,7 @@ class PHPUnit_TextUI_Command
         } else {
             $suite = $runner->getTest(
               $this->arguments['test'],
-              $this->arguments['testFile'],
-              $this->arguments['syntaxCheck']
+              $this->arguments['testFile']
             );
         }
 
@@ -394,7 +392,6 @@ class PHPUnit_TextUI_Command
 
                 case '--process-isolation': {
                     $this->arguments['processIsolation'] = TRUE;
-                    $this->arguments['syntaxCheck']      = FALSE;
                 }
                 break;
 
@@ -445,11 +442,6 @@ class PHPUnit_TextUI_Command
 
                 case '--tap': {
                     $this->arguments['printer'] = new PHPUnit_Util_Log_TAP;
-                }
-                break;
-
-                case '--syntax-check': {
-                    $this->arguments['syntaxCheck'] = TRUE;
                 }
                 break;
 
@@ -592,10 +584,6 @@ class PHPUnit_TextUI_Command
 
             $phpunit = $configuration->getPHPUnitConfiguration();
 
-            if (isset($phpunit['syntaxCheck'])) {
-                $this->arguments['syntaxCheck'] = $phpunit['syntaxCheck'];
-            }
-
             if (isset($phpunit['testSuiteLoaderClass'])) {
                 if (isset($phpunit['testSuiteLoaderFile'])) {
                     $file = $phpunit['testSuiteLoaderFile'];
@@ -625,9 +613,7 @@ class PHPUnit_TextUI_Command
             }
 
             if (!isset($this->arguments['test'])) {
-                $testSuite = $configuration->getTestSuiteConfiguration(
-                  $this->arguments['syntaxCheck']
-                );
+                $testSuite = $configuration->getTestSuiteConfiguration();
 
                 if ($testSuite !== NULL) {
                     $this->arguments['test'] = $testSuite;
@@ -646,10 +632,6 @@ class PHPUnit_TextUI_Command
             (isset($this->arguments['testDatabaseLogRevision']) && !isset($this->arguments['testDatabaseDSN']))) {
             $this->showHelp();
             exit(PHPUnit_TextUI_TestRunner::EXCEPTION_EXIT);
-        }
-
-        if (!isset($this->arguments['syntaxCheck'])) {
-            $this->arguments['syntaxCheck'] = FALSE;
         }
 
         if ($skeletonClass || $skeletonTest) {
