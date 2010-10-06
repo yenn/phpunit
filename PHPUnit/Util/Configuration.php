@@ -751,8 +751,7 @@ class PHPUnit_Util_Configuration
                 $this->toAbsolutePath($directory),
                 $suffix,
                 $prefix,
-                array(),
-                TRUE
+                array()
               )
             );
         }

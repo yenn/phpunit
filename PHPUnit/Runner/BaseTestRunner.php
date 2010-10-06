@@ -94,10 +94,7 @@ abstract class PHPUnit_Runner_BaseTestRunner
             $suite->addTestFiles(
               File_Iterator_Factory::getFilesAsArray(
                 $suiteClassName,
-                array('Test.php', '.phpt'),
-                array(),
-                array(),
-                TRUE
+                array('Test.php', '.phpt')
               )
             );
 
