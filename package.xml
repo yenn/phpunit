@@ -262,13 +262,7 @@
      <file baseinstalldir="/" name="BaseTestRunner.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
-     <file baseinstalldir="/" name="IncludePathTestCollector.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
      <file baseinstalldir="/" name="StandardTestSuiteLoader.php" role="php">
-      <tasks:replace from="@package_version@" to="version" type="package-info" />
-     </file>
-     <file baseinstalldir="/" name="TestCollector.php" role="php">
       <tasks:replace from="@package_version@" to="version" type="package-info" />
      </file>
      <file baseinstalldir="/" name="TestSuiteLoader.php" role="php">
@@ -484,7 +478,7 @@
    <package>
     <name>File_Iterator</name>
     <channel>pear.phpunit.de</channel>
-    <min>1.2.2</min>
+    <min>1.2.4</min>
    </package>
    <package>
     <name>Text_Template</name>
