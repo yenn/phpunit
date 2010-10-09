@@ -82,6 +82,7 @@ class PHPUnit_TextUI_Command
       'configuration=' => NULL,
       'coverage-html=' => NULL,
       'coverage-clover=' => NULL,
+      'coverage-php=' => NULL,
       'debug' => NULL,
       'exclude-group=' => NULL,
       'filter=' => NULL,
@@ -295,6 +296,24 @@ class PHPUnit_TextUI_Command
                     if (extension_loaded('tokenizer') &&
                         extension_loaded('xdebug')) {
                         $this->arguments['reportDirectory'] = $option[1];
+                    } else {
+                        if (!extension_loaded('tokenizer')) {
+                            $this->showMessage(
+                              'The tokenizer extension is not loaded.'
+                            );
+                        } else {
+                            $this->showMessage(
+                              'The Xdebug extension is not loaded.'
+                            );
+                        }
+                    }
+                }
+                break;
+
+                case '--coverage-php': {
+                    if (extension_loaded('tokenizer') &&
+                        extension_loaded('xdebug')) {
+                        $this->arguments['coveragePHP'] = $option[1];
                     } else {
                         if (!extension_loaded('tokenizer')) {
                             $this->showMessage(
