@@ -840,6 +840,7 @@ EOT;
         $buffer  = '';
         $tests   = '';
         $classes = array();
+
         foreach ($suite as $test) {
             $class     = new ReflectionClass($test);
             $className = $class->getName();
