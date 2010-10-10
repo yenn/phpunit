@@ -850,7 +850,7 @@ EOT;
                 $tests .= $className . ' ';
 
                 $buffer .= sprintf(
-                  "%s : \n\t\tphpunit --no-configuration --log-junit %s.xml --coverage-php %s.cov %s %s > /dev/null\n",
+                  "%s : \n\t\tphpunit --no-configuration --log-junit %s.xml --coverage-php %s.cov %s %s > /dev/null\n\n",
                   $className,
                   $className,
                   $className,
@@ -862,7 +862,7 @@ EOT;
             }
         }
 
-        $buffer = 'tests : ' . $tests . "\n" . $buffer;
+        $buffer = 'tests : ' . $tests . "\n\n" . $buffer;
 
         file_put_contents('Makefile', $buffer);
     }
