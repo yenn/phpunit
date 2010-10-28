@@ -854,9 +854,11 @@ EOT;
      */
     protected function generateMakefile(PHPUnit_Framework_TestSuite $suite)
     {
-        $buffer  = '';
-        $tests   = '';
-        $classes = array();
+        $buffer   = '';
+        $tests    = '';
+        $classes  = array();
+        $coverage = isset($this->arguments['coverageClover']) ||
+                    isset($this->arguments['reportDirectory']);
 
         foreach ($suite as $test) {
             $class     = new ReflectionClass($test);
@@ -867,10 +869,10 @@ EOT;
                 $tests .= $className . ' ';
 
                 $buffer .= sprintf(
-                  "%s : \n\t\tphpunit --no-configuration --log-junit %s.xml --coverage-php %s.cov %s %s > /dev/null\n\n",
+                  "%s : \n\t\tphpunit --no-configuration --log-junit %s.xml %s %s %s > /dev/null\n\n",
                   $className,
                   $className,
-                  $className,
+                  $coverage ? '--coverage-php ' . $className . '.cov' : '',
                   $className,
                   $file
                 );
