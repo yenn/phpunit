@@ -869,10 +869,10 @@ EOT;
                 $tests .= $className . ' ';
 
                 $buffer .= sprintf(
-                  "%s : \n\t\tphpunit --no-configuration --log-junit %s.xml %s %s %s > /dev/null\n\n",
+                  "%s : \n\t\tphpunit --no-configuration --log-junit %s.xml%s %s %s > /dev/null\n\n",
                   $className,
                   $className,
-                  $coverage ? '--coverage-php ' . $className . '.cov' : '',
+                  $coverage ? ' --coverage-php ' . $className . '.cov' : '',
                   $className,
                   $file
                 );
