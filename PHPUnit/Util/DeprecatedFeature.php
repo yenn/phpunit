@@ -2,7 +2,7 @@
 /**
  * PHPUnit
  *
- * Copyright (c) 2002-2011, Sebastian Bergmann <sebastian@phpunit.de>.
+ * Copyright (c) 2002-2010, Sebastian Bergmann <sebastian@phpunit.de>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,44 +35,69 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  * @package    PHPUnit
+ * @subpackage Framework
+ * @author     Ralph Schindler <ralph.schindler@zend.com>
  * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2002-2011 Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.phpunit.de/
- * @since      File available since Release 3.5.0
+ * @since      File available since Release 3.5.7
  */
 
-require_once 'File/Iterator/Autoload.php';
-require_once 'PHP/CodeCoverage/Autoload.php';
-require_once 'PHPUnit/Framework/MockObject/Autoload.php';
-require_once 'PHPUnit/Extensions/Database/Autoload.php';
-require_once 'PHPUnit/Extensions/SeleniumTestCase/Autoload.php';
-require_once 'Text/Template/Autoload.php';
+/**
+ * Class to hold the information about a deprecated feature that was used
+ *
+ * @package    PHPUnit
+ * @subpackage Framework
+ * @author     Ralph Schindler <ralph.schindler@zend.com>
+ * @author     Sebastian Bergmann <sebastian@phpunit.de>
+ * @copyright  2002-2010 Sebastian Bergmann <sebastian@phpunit.de>
+ * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @version    Release: @package_version@
+ * @link       http://www.phpunit.de/
+ * @since      Interface available since Release 3.5.7
+ */
+class PHPUnit_Util_DeprecatedFeature
+{
+    /**
+     * @var array
+     */
+    protected $traceInfo = array();
 
-function phpunit_autoload($class) {
-    static $classes = NULL;
-    static $path = NULL;
-    static $filter = NULL;
+    /**
+     * @var string
+     */
+    protected $message = NULL;
 
-    if ($classes === NULL) {
-        $classes = array(
-          ___CLASSLIST___
-        );
-
-        $path = dirname(__FILE__);
-
-        $filter = PHP_CodeCoverage_Filter::getInstance();
+    /**
+     * @param  string $message
+     * @param  array  $traceInfo
+     */
+    public function __construct($message, array $traceInfo = array())
+    {
+        $this->message   = $message;
+        $this->traceInfo = $traceInfo;
     }
 
-    $cn = strtolower($class);
+    /**
+     * Build a string representation of the deprecated feature that was raised
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $string = '';
 
-    if (isset($classes[$cn])) {
-        $file = $path . $classes[$cn];
+        if (isset($this->traceInfo['file'])) {
+            $string .= $this->traceInfo['file'];
 
-        require $file;
+            if (isset($this->traceInfo['line'])) {
+                $string .= ':' . $this->traceInfo['line'] . ' - ';
+            }
+        }
 
-        $filter->addFileToBlackList($file, 'PHPUNIT');
+        $string .= $this->message;
+
+        return $string;
     }
 }
-
-spl_autoload_register('phpunit_autoload');
