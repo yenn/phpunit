@@ -146,122 +146,122 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
      *
      * @var    boolean
      */
-    protected $inIsolation = FALSE;
+    private $inIsolation = FALSE;
 
     /**
      * @var    array
      */
-    protected $data = array();
+    private $data = array();
 
     /**
      * @var    string
      */
-    protected $dataName = '';
+    private $dataName = '';
 
     /**
      * @var    boolean
      */
-    protected $useErrorHandler = NULL;
+    private $useErrorHandler = NULL;
 
     /**
      * @var    boolean
      */
-    protected $useOutputBuffering = NULL;
+    private $useOutputBuffering = NULL;
 
     /**
      * The name of the expected Exception.
      *
      * @var    mixed
      */
-    protected $expectedException = NULL;
+    private $expectedException = NULL;
 
     /**
      * The message of the expected Exception.
      *
      * @var    string
      */
-    protected $expectedExceptionMessage = '';
+    private $expectedExceptionMessage = '';
 
     /**
      * The code of the expected Exception.
      *
      * @var    integer
      */
-    protected $expectedExceptionCode;
+    private $expectedExceptionCode;
 
     /**
      * The stack trace to where the expected exception was set.
      *
      * @var    array
      */
-    protected $expectedExceptionTrace = array();
+    private $expectedExceptionTrace = array();
 
     /**
      * The name of the test case.
      *
      * @var    string
      */
-    protected $name = NULL;
+    private $name = NULL;
 
     /**
      * @var    array
      */
-    protected $dependencies = array();
+    private $dependencies = array();
 
     /**
      * @var    array
      */
-    protected $dependencyInput = array();
+    private $dependencyInput = array();
 
     /**
      * @var    string
      */
-    protected $exceptionMessage = NULL;
+    private $exceptionMessage = NULL;
 
     /**
      * @var    integer
      */
-    protected $exceptionCode = 0;
+    private $exceptionCode = 0;
 
     /**
      * @var    Array
      */
-    protected $iniSettings = array();
+    private $iniSettings = array();
 
     /**
      * @var    Array
      */
-    protected $locale = array();
+    private $locale = array();
 
     /**
      * @var    Array
      */
-    protected $mockObjects = array();
+    private $mockObjects = array();
 
     /**
      * @var    integer
      */
-    protected $status;
+    private $status;
 
     /**
      * @var    string
      */
-    protected $statusMessage = '';
+    private $statusMessage = '';
 
     /**
      * @var    integer
      */
-    protected $numAssertions = 0;
+    private $numAssertions = 0;
 
     /**
      * @var PHPUnit_Framework_TestResult
      */
-    protected $result;
+    private $result;
 
     /**
      * @var mixed
      */
-    protected $testResult;
+    private $testResult;
 
     /**
      * Constructs a test case with the given name.
@@ -1149,6 +1149,31 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
           $callOriginalConstructor,
           FALSE,
           FALSE
+        );
+    }
+
+    /**
+     * Returns an object for the specified trait.
+     *
+     * @param  string  $traitName
+     * @param  array   $arguments
+     * @param  string  $traitClassName
+     * @param  boolean $callOriginalConstructor
+     * @param  boolean $callOriginalClone
+     * @param  boolean $callAutoload
+     * @return object
+     * @since  Method available since Release 3.6.0
+     * @throws InvalidArgumentException
+     */
+    protected function getObjectForTrait($traitName, array $arguments = array(), $traitClassName = '', $callOriginalConstructor = TRUE, $callOriginalClone = TRUE, $callAutoload = TRUE)
+    {
+        return PHPUnit_Framework_MockObject_Generator::getObjectForTrait(
+          $traitName,
+          $arguments,
+          $traitClassName,
+          $callOriginalConstructor,
+          $callOriginalClone,
+          $callAutoload
         );
     }
 
