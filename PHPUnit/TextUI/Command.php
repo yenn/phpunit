@@ -115,6 +115,7 @@ class PHPUnit_TextUI_Command
       'no-configuration' => NULL,
       'no-globals-backup' => NULL,
       'static-backup' => NULL,
+      'reuse-session' => NULL,
       'verbose' => NULL,
       'version' => NULL,
       'wait' => NULL
@@ -503,6 +504,11 @@ class PHPUnit_TextUI_Command
                 }
                 break;
 
+                case '--reuse-session': {
+                    $this->arguments['reuseSession'] = TRUE;
+                }
+                break;
+                
                 case '--verbose': {
                     $this->arguments['verbose'] = TRUE;
                 }
@@ -869,6 +875,8 @@ Usage: phpunit [switches] UnitTest [UnitTest.php]
   --include-path <path(s)> Prepend PHP's include_path with given path(s).
   -d key[=value]           Sets a php.ini value.
 
+  --reuse-session          Designed for selenium testing through PHPUnit. Enables the possibility to share one session among all testsuites.
+    
   --help                   Prints this usage information.
   --version                Prints the version and exits.
 

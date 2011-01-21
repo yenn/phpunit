@@ -132,6 +132,11 @@ class PHPUnit_Framework_TestSuite implements PHPUnit_Framework_Test, PHPUnit_Fra
     protected $testCase = FALSE;
 
     /**
+     * @var boolean
+     */
+    protected $reuseSession = FALSE;
+
+    /**
      * Constructs a new TestSuite:
      *
      *   - PHPUnit_Framework_TestSuite() constructs an empty TestSuite.
@@ -628,6 +633,27 @@ class PHPUnit_Framework_TestSuite implements PHPUnit_Framework_Test, PHPUnit_Fra
     }
 
     /**
+     * Sets flag whether the suite should use only one session (previously generated) within the suite.
+     * Disables regeneration of the session with every start of a new suite.
+     * 
+     * @param boolean $state
+     */
+	public function setReuseSession($state)
+	{
+		$this->reuseSession = $state;
+	}
+	
+	/**
+	 * Returns the reuse session param for the suite
+	 * 
+	 * @return boolean
+	 */
+	public function getReuseSession()
+	{
+		return $this->reuseSession;
+	}
+
+    /**
      * Runs the tests and collects their result in a TestResult.
      *
      * @param  PHPUnit_Framework_TestResult $result
@@ -687,6 +713,10 @@ class PHPUnit_Framework_TestSuite implements PHPUnit_Framework_Test, PHPUnit_Fra
             if ($test instanceof PHPUnit_Framework_TestSuite) {
                 $test->setBackupGlobals($this->backupGlobals);
                 $test->setBackupStaticAttributes($this->backupStaticAttributes);
+                //pass reuse session param to subsuites
+                if ($this->getReuseSession()) {
+                	$test->setReuseSession(TRUE);
+                }
 
                 $test->run(
                   $result, $filter, $groups, $excludeGroups, $processIsolation
@@ -728,6 +758,12 @@ class PHPUnit_Framework_TestSuite implements PHPUnit_Framework_Test, PHPUnit_Fra
                           $this->backupStaticAttributes
                         );
                         $test->setRunTestInSeparateProcess($processIsolation);
+                    }
+                    if ($test instanceof PHPUnit_Extensions_SeleniumTestCase) {
+                    	//set reuse session param only if running selenium test case
+                    	if ($this->getReuseSession() && isset($test->reuseSession)) {
+                    		$test->reuseSession = TRUE;
+                    	}
                     }
 
                     $this->runTest($test, $result);

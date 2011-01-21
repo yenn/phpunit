@@ -296,6 +296,10 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
             $result->strictMode(TRUE);
         }
 
+        if ($arguments['reuseSession']) {
+            $suite->setReuseSession(TRUE);
+        }
+
         $suite->run(
           $result,
           $arguments['filter'],
