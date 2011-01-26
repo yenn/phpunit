@@ -111,6 +111,11 @@ class PHPUnit_Framework_TestResult implements Countable
     protected $runTests = 0;
 
     /**
+     * @var integer
+     */
+    public $seleniumTests = 0;
+
+    /**
      * @var float
      */
     protected $time = 0;
@@ -730,6 +735,9 @@ class PHPUnit_Framework_TestResult implements Countable
               $time
             );
         }
+    	if ($test instanceof PHPUnit_Extensions_SeleniumTestCase) {
+			$this->seleniumTests++;
+		}
 
         $this->endTest($test, $time);
     }

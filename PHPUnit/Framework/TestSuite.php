@@ -769,7 +769,7 @@ class PHPUnit_Framework_TestSuite implements PHPUnit_Framework_Test, PHPUnit_Fra
                     	//set reuse session param only if running selenium test case
                     	if ($this->getReuseSession() && isset($test->reuseSession)) {
                     		$test->reuseSession = TRUE;
-                    		if ($result->count() == (PHPUnit_Util_Test::$numSeleniumTest-1)) {
+                    	    if ($result->seleniumTests == (PHPUnit_Util_Test::$numSeleniumTest - 1)) {
                     			$test->lastTest = TRUE;
                     		}
                     	}
