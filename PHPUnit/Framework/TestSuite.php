@@ -125,7 +125,6 @@ class PHPUnit_Framework_TestSuite implements PHPUnit_Framework_Test, PHPUnit_Fra
      * @var    integer
      */
     protected $numTests = -1;
-    protected $numTestsSelenium = -1;
 
     /**
      * @var boolean
@@ -449,13 +448,9 @@ class PHPUnit_Framework_TestSuite implements PHPUnit_Framework_Test, PHPUnit_Fra
         }
 
         $this->numTests = 0;
-        $this->numTestsSelenium = 0;
 
         foreach ($this->tests as $test) {
             $this->numTests += count($test);
-        	foreach ($test as $t) {
-            	if ($t instanceof PHPUnit_Extensions_SeleniumTestCase) $this->numTestsSelenium++;
-            }
         }
 
         return $this->numTests;
@@ -769,7 +764,7 @@ class PHPUnit_Framework_TestSuite implements PHPUnit_Framework_Test, PHPUnit_Fra
                     	//set reuse session param only if running selenium test case
                     	if ($this->getReuseSession() && isset($test->reuseSession)) {
                     		$test->reuseSession = TRUE;
-                    	    if ($result->seleniumTests == (PHPUnit_Util_Test::$numSeleniumTest - 1)) {
+                    		if ($result->seleniumTests == ($result->seleniumTestsTotal - 1)) {
                     			$test->lastTest = TRUE;
                     		}
                     	}

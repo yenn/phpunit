@@ -61,7 +61,6 @@ class PHPUnit_Util_Test
     const REGEX_EXPECTED_EXCEPTION = '(@expectedException\s+([:.\w\\\\x7f-\xff]+)(?:[\t ]+(\S*))?(?:[\t ]+(\S*))?\s*$)m';
 
     private static $annotationCache = array();
-    public static $numSeleniumTest = -1;
 
     protected static $templateMethods = array(
       'setUp', 'assertPreConditions', 'assertPostConditions', 'tearDown'

@@ -116,6 +116,11 @@ class PHPUnit_Framework_TestResult implements Countable
     public $seleniumTests = 0;
 
     /**
+     * @var integer
+     */
+	public $seleniumTestsTotal = 0;
+
+    /**
      * @var float
      */
     protected $time = 0;
@@ -381,6 +386,9 @@ class PHPUnit_Framework_TestResult implements Countable
     {
         $this->lastTestFailed = FALSE;
         $this->runTests      += count($test);
+    	if ($test instanceof PHPUnit_Extensions_SeleniumTestCase) {
+			$this->seleniumTestsTotal += count($test);
+		}
 
         foreach ($this->listeners as $listener) {
             $listener->startTest($test);
