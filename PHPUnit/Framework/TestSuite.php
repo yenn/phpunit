@@ -716,7 +716,6 @@ class PHPUnit_Framework_TestSuite implements PHPUnit_Framework_Test, PHPUnit_Fra
                 //pass reuse session param to subsuites
                 if ($this->getReuseSession()) {
                 	$test->setReuseSession(TRUE);
-                	PHPUnit_Util_Test::$numSeleniumTest = $this->numTestsSelenium;
                 }
 
                 $test->run(

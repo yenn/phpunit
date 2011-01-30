@@ -298,6 +298,9 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
 
         if (isset($arguments['reuseSession'])) {
             $suite->setReuseSession(TRUE);
+            foreach ($suite as $s) {
+				if ($s instanceof PHPUnit_Extensions_SeleniumTestCase) $result->seleniumTestsTotal++;
+			}
         }
 
         $suite->run(

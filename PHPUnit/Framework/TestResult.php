@@ -386,9 +386,6 @@ class PHPUnit_Framework_TestResult implements Countable
     {
         $this->lastTestFailed = FALSE;
         $this->runTests      += count($test);
-    	if ($test instanceof PHPUnit_Extensions_SeleniumTestCase) {
-			$this->seleniumTestsTotal += count($test);
-		}
 
         foreach ($this->listeners as $listener) {
             $listener->startTest($test);
